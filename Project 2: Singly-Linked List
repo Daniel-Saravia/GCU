@@ -197,84 +197,86 @@ public:
         temp->next = head;
         head = temp;
     }
+    void driver() {
+        cout << "Start...\n";
+        cout << "list_1 = ";
+        //create 2 lists
+        myList<int> list_1;
+        myList<int> merge;
+
+        //fill list_1
+        list_1.insertFront(11);
+        list_1.insertFront(9);
+        list_1.insert(8);
+        list_1.insertFront(10);
+
+        list_1.display();
+
+        //Test copy constrctor
+        cout << "Test for copy constructor...\n";
+        myList<int> list_2 = list_1;
+        cout << "list_2 = ";
+        list_2.display();
+        cout << "\n";
+
+        //Test for front()
+        cout << "Test for front()...\n";
+        list_1.front();
+        cout << "\n";
+        cout << "\n";
+
+        //Test for back()
+        cout << "Test for back()...\n";
+        list_1.back();
+        cout << "\n";
+        cout << "\n";
+
+        //Test for insert(val)
+        cout << "Test for insert(4)...\n";
+        list_1.insert(4);
+        list_1.display();
+        cout << "\n";
+
+        //Test for pop_front
+        cout << "Test for pop_front()...\n";
+        list_1.pop_front();
+        list_1.display();
+        cout << "\n";
+
+        //Test for pop_back
+        cout << "Test for pop_back()...\n";
+        list_1.pop_back();
+        list_1.display();
+        cout << "\n";
+
+        //Test for empty()
+        cout << "Test for empty()...\n";
+        list_1.empty();
+        cout << "\n";
+
+        //Test for size()
+        cout << "Test for size()...\n";
+        int size = list_1.size();
+        cout << "size = " << size << "\n";
+        cout << "\n";
+
+        //Test for reverse()
+        cout << "Test for reverse()...\n";
+        list_1.reverse();
+        list_1.display();
+        cout << "\n";
+
+        //Test for merge()
+        cout << "Test for merge()...\n";
+        cout << "list_1 + list_2 = ";
+        merge = list_1.merge(list_1, list_2);
+        merge.display();
+        cout << "End of program... \n";
+    }
 };
-    
-
-
+//tiny main
 int main() {
-    cout << "Start...\n";
-    cout << "list_1 = ";
-    //create 2 lists
-    myList<int> list_1;
-    myList<int> merge;
-
-    //fill list_1
-    list_1.insertFront(11);
-    list_1.insertFront(9);
-    list_1.insert(8);
-    list_1.insertFront(10);
-
-    list_1.display();
-
-    //Test copy constrctor
-    cout << "Test for copy constructor...\n";
-    myList<int> list_2 = list_1;
-    cout << "list_2 = ";
-    list_2.display();
-    cout << "\n";
-
-    //Test for front()
-    cout << "Test for front()...\n";
-    list_1.front();
-    cout << "\n";
-    cout << "\n";
-
-    //Test for back()
-    cout << "Test for back()...\n";
-    list_1.back();
-    cout << "\n";
-    cout << "\n";
-    
-    //Test for insert(val)
-    cout << "Test for insert(4)...\n";
-    list_1.insert(4);
-    list_1.display();
-    cout << "\n";
-
-    //Test for pop_front
-    cout << "Test for pop_front()...\n";
-    list_1.pop_front();
-    list_1.display();
-    cout << "\n";
-
-    //Test for pop_back
-    cout << "Test for pop_back()...\n";
-    list_1.pop_back();
-    list_1.display();
-    cout << "\n";
-    
-    //Test for empty()
-    cout << "Test for empty()...\n";
-    list_1.empty();
-    cout << "\n";
-
-    //Test for size()
-    cout << "Test for size()...\n";
-    int size = list_1.size();
-    cout << "size = " << size << "\n";
-    cout << "\n";
-
-    //Test for reverse()
-    cout << "Test for reverse()...\n";
-    list_1.reverse();
-    list_1.display();
-    cout << "\n";
-
-    //Test for merge()
-    cout << "Test for merge()...\n";
-    cout << "list_1 + list_2 = ";
-    merge = list_1.merge(list_1, list_2);
-    merge.display();
-    cout << "End of program... \n";
+    myList<int> run;
+    run.driver();
     return 0;
-}
+};
