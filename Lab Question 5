@@ -1,0 +1,16 @@
+#Daniel Saravia
+#Lab Question 5
+#This is my own work
+
+#user input
+text = input("Enter a number: ")
+#try for inputs that are not numbers
+try:
+    number = int(text)
+except ValueError:
+    print("Invalid input. Please enter a number.")
+else:
+    #number.bit_count() is a new addition to python 3.10 which counts the 1's
+    #bin(number) gets the binary number for the input
+    #replace("0b", "") gets rid of the 0b in the front which is short for base 2 aka binary
+    print("({},'{}')".format(number.bit_count(), bin(number).replace("0b", "")))
