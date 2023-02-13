@@ -1,0 +1,58 @@
+#Daniel Saravia
+#2/12/2023
+#Program 1
+#CST215
+#This is my own work
+#https://www.loom.com/share/6e58ad609b844d0594d3f3a062dae5e5
+#
+#HALF_ADDER
+def HALF_ADDER(A, B):
+    sum = A ^ B
+    carry = A & B
+    return (carry, sum)
+
+#Make inputs
+inputs = [0, 1]
+#print for HALF_ADDER
+print("Half-adder")
+#two for loops to match inputs 0 and 1 for HALF_ADDER
+for i in inputs:
+    for j in inputs:
+        print(f"i = {i}  j = {j}", end=" ")
+        x, y = HALF_ADDER(i, j)
+        print(f"| c = {x} s = {y}")
+
+print()
+#Full_adder method
+print("Full_adder")
+def full_adder(a, b, c):
+    sum = a ^ b ^ c
+    carry = (a & b) | (a & c) | (b & c)
+    return (sum, carry)
+
+# Loop that varies the input 0 and 1
+for i in range(8):
+    #matches the input table
+    a = (i & 4) >> 2
+    b = (i & 2) >> 1
+    c = i & 1
+    (sum, carry) = full_adder(a, b, c)
+    print("i =", a, " j =", b, " k =", c, " |  c =", carry, "s =", sum)
+#PARALLEL_ADDER
+def PARALLEL_ADDER(a, b):
+    decimal_sum = int(a, 2) + int(b, 2)
+    binary_sum = bin(decimal_sum)[2:].zfill(3)
+    return binary_sum
+#cast to binary
+a = bin(3)
+b = bin(6)
+c = PARALLEL_ADDER(a, b)
+#cut 0b
+a = a[2:]
+b = b[2:]
+#add zeros
+a = a.zfill(3)
+b = b.zfill(3)
+print()
+print(f"{a} + {b} = {c}")
+
