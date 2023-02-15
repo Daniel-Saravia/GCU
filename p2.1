@@ -1,0 +1,374 @@
+//Daniel Saravia
+//Project 2: Singly-Linked List
+//CST-201-WF300A
+//1/31/23
+//This is my own work
+#include <iostream>
+using namespace std;
+template<typename T>
+class myList{
+public:
+    //1: Default Constructor
+    myList()
+    {
+        head = nullptr;
+    }
+    //2: Copy Constructor
+    myList(const myList &list){
+        //if list is empty
+        if (list.head == NULL) {
+            head = tail = NULL;
+            return;
+        }
+
+        // Make a Node pointer temp and
+        // initialize it to the head of list
+        node* temp = list.head;
+
+        // This loop is creating the new
+        // linked list by copying the
+        // data of list
+        while (temp != NULL) {
+            node* newNode = new node(temp->data);
+            //if there is only 1 element
+            if (head == NULL) {
+                head = newNode;
+                tail = newNode;
+            }
+            //if there is only 1 element 
+            else {
+                tail->next = newNode;
+                tail = newNode;
+            }
+            temp = temp->next;
+        }
+    }
+    //struct for the node
+    struct node {
+        int data;
+        node* next;
+    };
+    // varibles for node
+    struct node* head = NULL;
+    struct node* tail = NULL;
+    
+    void insertFront(T newData) {
+        struct node* newNode = new node;
+        if (head == NULL) {
+            tail = newNode;
+        }
+        newNode->data = newData;
+        newNode->next = head;
+        head = newNode;
+    }
+    void insertEnd(T newData) {
+        struct node* newNode = new node;
+        newNode->data = newData;
+        newNode->next = NULL;
+        tail->next = newNode;
+        tail = newNode;
+    }
+    void display() {
+        struct node* temp;
+        temp = head;
+        while (temp != NULL) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << "\n";
+    }
+    void deleteHead() {
+        struct node* temp;
+        temp = head;
+        head = temp->next;
+        delete temp;
+    }
+    //3: front
+    void front() {
+        int n = 0;
+        node* current = head;
+        if (current == nullptr) {
+            cout << "There is no head \n";
+        }
+        else if (current != nullptr) { 
+            int data = current->data;
+            cout << data;
+        }
+    }
+    //4: back
+    void back() {
+        node* current = head;
+        while (current != nullptr && current->next != nullptr) {
+            current = current->next;
+        }
+
+        if (current != nullptr) {
+            int data = current->data;
+            cout << data;
+        }
+    }
+
+    //5: insert- inserts value and sorts linked list with quick sort
+    void insert(T value) {
+        insertFront(value);
+        node* current = head;
+        quickSort(current);
+    }
+    node* getTail(node* cur) {
+        while (cur != NULL && cur->next != NULL) {
+            cur = cur->next;
+        }
+        return cur;
+    }
+
+    node* partition(node* head, node* end, node*& newHead, node*& newEnd) {
+        node* pivot = end;
+        node* prev = NULL, * cur = head, * tail = pivot;
+
+        while (cur != pivot) {
+            if (cur->data < pivot->data) {
+                if (newHead == NULL) {
+                    newHead = cur;
+                }
+                prev = cur;
+                cur = cur->next;
+            }
+            else {
+                if (prev) {
+                    prev->next = cur->next;
+                }
+                node* tmp = cur->next;
+                cur->next = NULL;
+                tail->next = cur;
+                tail = cur;
+                cur = tmp;
+            }
+        }
+
+        if (newHead == NULL) {
+            newHead = pivot;
+        }
+
+        newEnd = tail;
+        return pivot;
+    }
+
+    node* quickSortRecur(node* head, node* end) {
+        if (!head || head == end) {
+            return head;
+        }
+
+        node* newHead = NULL, * newEnd = NULL;
+        node* pivot = partition(head, end, newHead, newEnd);
+        if (newHead != pivot) {
+            node* tmp = newHead;
+            while (tmp->next != pivot) {
+                tmp = tmp->next;
+            }
+            tmp->next = NULL;
+            newHead = quickSortRecur(newHead, tmp);
+            tmp = getTail(newHead);
+            tmp->next = pivot;
+        }
+        pivot->next = quickSortRecur(pivot->next, newEnd);
+        return newHead;
+    }
+
+    void quickSort(node*& headRef) {
+        headRef = quickSortRecur(headRef, getTail(headRef));
+        return;
+    }
+    void printList(node* node)
+    {
+        while (node != NULL) {
+            cout << node->data << " ";
+            node = node->next;
+        }
+        cout << "\n";
+    }
+    node* getHead() {
+        return head;
+    }
+
+
+    
+    //6: pop_front
+    void pop_front() {
+        if (head == NULL) {
+            cout << "Empty List \n";
+            return;
+        }
+            
+        node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+    //6: pop_back
+    void pop_back() {
+        if (head == NULL) {
+            cout << "Empty List \n";
+            return;
+        }
+
+        if (head->next == NULL) { // Only one element
+            delete head;
+            head = NULL;
+            return;
+        }
+
+        node* temp = head;
+        node *prev = NULL;
+        while (temp->next != NULL) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        prev->next = NULL;
+        delete temp;
+    }
+    //7: empty
+    void empty(){
+        if (head == NULL) {
+            cout << "Empty List \n";
+            return;
+        }
+        cout << "Is not Empty\n";
+    }
+    //8: size
+    int size(){
+        int count = 0;
+        node* temp = head;
+        while (temp != NULL) {
+            count++;
+            temp = temp->next;
+        }
+        return count;
+    }
+    //9: reverse
+    void reverse(){
+        node* prev = NULL;
+        node* curr = head;
+        node* next;
+        while (curr != NULL) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+    //10: merge
+    node* SortedMerge(node* a, node* b)
+    {
+        //sort lists
+        quickSort(a);
+        quickSort(b);
+        node* result = nullptr;
+        
+        /* Base cases */
+        if (a == NULL)
+            return (b);
+        else if (b == NULL)
+            return (a);
+
+        /* Pick either a or b, and recur */
+        if (a->data <= b->data) {
+            result = a;
+            result->next = SortedMerge(a->next, b);
+        }
+        else {
+            result = b;
+            result->next = SortedMerge(a, b->next);
+        }
+        return (result);
+    }
+    void driver() {
+        cout << "Start...\n";
+        cout << "list_1 = ";
+        //create 2 lists
+        myList<int> list_1;
+
+        //fill list_1
+        list_1.insertFront(11);
+        list_1.insertFront(9);
+        list_1.insert(8);
+        list_1.insertFront(10);
+        list_1.display();
+        cout << "\n";
+
+        //Test copy constrctor
+        cout << "Test for copy constructor...\n";
+        myList<int> list_2 = list_1;
+        cout << "list_2 = ";
+        list_2.display();
+        cout << "\n";
+
+        //Test for front()
+        cout << "Test for front()...\n";
+        list_1.front();
+        cout << "\n";
+        cout << "\n";
+
+        //Test for back()
+        cout << "Test for back()...\n";
+        list_1.back();
+        cout << "\n";
+        cout << "\n";
+
+        //Test for insert(val)
+        cout << "Test for insert(4)...\n";
+        list_1.insert(4);
+        list_1.display();
+        cout << "\n";
+
+        //Test for pop_front
+        cout << "Test for pop_front()...\n";
+        list_1.pop_front();
+        list_1.display();
+        cout << "\n";
+
+        //Test for pop_back
+        cout << "Test for pop_back()...\n";
+        list_1.pop_back();
+        list_1.display();
+        cout << "\n";
+
+        //Test for empty()
+        cout << "Test for empty()...\n";
+        list_1.empty();
+        cout << "\n";
+
+        //Test for size()
+        cout << "Test for size()...\n";
+        int size = list_1.size();
+        cout << "size = " << size << "\n";
+        cout << "\n";
+
+        //Test for reverse()
+        cout << "Test for reverse()...\n";
+        list_1.reverse();
+        list_1.display();
+        cout << "\n";
+
+        //Test for merge() 
+        cout << "Test for merge()...\n";
+        cout << "list_1= ";
+        list_1.display();
+        cout << "list_2= ";
+        list_2.display();
+        cout << "list_1 + list_2 = ";
+        node* res = nullptr;
+        node* a = list_1.getHead();
+        node* b = list_2.getHead();
+        res = SortedMerge(a, b);
+        printList(res);
+        cout << "End of program... \n";
+    }
+};
+//tiny main
+int main() {
+    myList<int> run;
+    run.driver();
+    return 0;
+};
+
