@@ -1,15 +1,15 @@
-#Gabriel R Marcelino
-#Daniel Saravia
-#CLC Memory Cache Sim & MIPS
-#2/26/23
-#Write a program using the above notes write a MIPS 32 Assembly program, which includes a 
-#recursive procedure to print the Fibonacci sequence, defined as follows:
+# Gabriel R Marcelino
+# Daniel Saravia
+# CLC Memory Cache Sim & MIPS
+# 2/26/23
+# Write a program using the above notes write a MIPS 32 Assembly program, which includes a 
+# recursive procedure to print the Fibonacci sequence, defined as follows:
 
-#Let F(n) be the nth element (where n >= 0) in the sequence:
+# Let F(n) be the nth element (where n >= 0) in the sequence:
 
-#· If n < 2, then F(n) = 1
+# · If n < 2, then F(n) = 1
 
-#· Otherwise, F(n) = F(n-1) + F(n-2)
+# · Otherwise, F(n) = F(n-1) + F(n-2)
 
 .text
 main:
@@ -78,8 +78,8 @@ fib:
 beqz $a0,zero   # if n=0 return 0
 beq $a0,1,one   # if n=1 return 1
 
-#Calling to fib(n-1)
-#storing return address on stack
+# Calling to fib(n-1)
+# storing return address on stack
 sub $sp,$sp,4   
 sw $ra,0($sp)
 
@@ -87,29 +87,29 @@ sub $a0,$a0,1   #n-1
 jal fib     #fib(n-1)
 add $a0,$a0,1
 
-lw $ra,0($sp)   #restoring return address from stack
+lw $ra,0($sp)   # restoring return address from stack
 add $sp,$sp,4
 
-#Push return value to stack
+# Push return value to stack
 sub $sp,$sp,4   
 sw $v0,0($sp)
-#Calling fib(n-2)
+# Calling fib(n-2)
 
-#storing return address on stack
+# storing return address on stack
 sub $sp,$sp,4   
 sw $ra,0($sp)
 
-#n-2
+# n-2
 sub $a0,$a0,2
 #fib(n-2)
 jal fib     
 add $a0,$a0,2
 
-#restoring return address from stack
+# restoring return address from stack
 lw $ra,0($sp)   
 add $sp,$sp,4
 #---------------
-#Pop return value from stack
+# Pop return value from stack
 lw $s7,0($sp)   
 add $sp,$sp,4
 
@@ -126,7 +126,7 @@ li $v0,1
 jr $ra
 
 .data
-prompt: .asciiz "This program calculates Fibonacci sequence with recursive functions.\nEnter a non-negative number: "
+prompt: .asciiz "This program uses recursive routines to calculate the Fibonacci sequence.\nPut in a positive number: "
 result: .asciiz "F_"
 result2: .asciiz " = "
 smaller_then2: .asciiz "Because n is less then 2, n = 1"
