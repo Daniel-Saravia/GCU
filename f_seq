@@ -1,3 +1,16 @@
+#Gabriel R Marcelino
+#Daniel Saravia
+#CLC Memory Cache Sim & MIPS
+#2/14/23
+#Write a program using the above notes write a MIPS 32 Assembly program, which includes a 
+#recursive procedure to print the Fibonacci sequence, defined as follows:
+
+#Let F(n) be the nth element (where n >= 0) in the sequence:
+
+#· If n < 2, then F(n) = 1
+
+#· Otherwise, F(n) = F(n-1) + F(n-2)
+
 .text
 main:
 # Prompt user to input non-negative number
