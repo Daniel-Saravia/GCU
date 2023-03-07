@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+bool isSlip(string str) {
+  // check for D or E
+  if (str[0] == 'D' || str[0] == 'E') {
+    // check for F or F's
+    for (int i = 1; str[i] == 'F'; i++) {
+      // end if G
+      if (str[i + 1] == 'G') {
+        return true;
+        // recursion if i = D or E
+      } else if (str[i + 1] == 'D' || str[i + 1] == 'E') {
+        return isSlip(str.substr(i + 1));
+      } else {
+        return false;
+      }
+    }
+  } else {
+    return false;
+  }
+}
+
+// isSlop(string test) { return true; }
+int main() {
+  cout << "Hello World!\n";
+  // Slips
+  string myStrings[10];
+  myStrings[0] = "DFG";
+  myStrings[1] = "EFG";
+  myStrings[2] = "DFFFFFG";
+  myStrings[3] = "DFDFDFDFG";
+  myStrings[4] = "DFEFFFFFG";
+  // not Slips
+  myStrings[5] = "DFEFF";
+  myStrings[6] = "EFAHG";
+  myStrings[7] = "DEFG";
+  myStrings[8] = "DG";
+  myStrings[9] = "EFFFFDG";
+  for (int i = 0; i < 10; i++) {
+    cout << isSlip(myStrings[i]) << endl;
+  }
+
+  // string myString = "DG";
+  // cout << isSlip(myString) << endl;
+}
