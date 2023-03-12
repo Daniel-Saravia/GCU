@@ -1,0 +1,48 @@
+.data
+prompt1: .asciiz "Enter the number of instructions executed: "
+prompt2: .asciiz "Enter the clock frequency in MHz: "
+prompt3: .asciiz "Enter the time taken in seconds: "
+output: .asciiz "Average MIPS: "
+
+.text
+.globl main
+main:
+    # Print prompt1 and read input1
+    li $v0, 4
+    la $a0, prompt1
+    syscall
+    li $v0, 5
+    syscall
+    move $s0, $v0
+
+    # Print prompt2 and read input2
+    li $v0, 4
+    la $a0, prompt2
+    syscall
+    li $v0, 5
+    syscall
+    move $s1, $v0
+
+    # Print prompt3 and read input3
+    li $v0, 4
+    la $a0, prompt3
+    syscall
+    li $v0, 6
+    syscall
+    mov.s $f0, $f12
+
+    # Calculate average MIPS
+    div.s $f1, $s0, $f0
+    mul.s $f2, $f1, $s1
+
+    # Print the average
+    li $v0, 4
+    la $a0, output
+    syscall
+    li $v0, 2
+    mov.d $f12, $f2
+    syscall
+
+    # Exit the program
+    li $v0, 10
+    syscall
